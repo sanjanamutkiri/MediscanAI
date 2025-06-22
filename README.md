@@ -215,7 +215,7 @@ VITE_GOOGLE_AI_API_KEY=your-google-ai-key
 ## 📁 Project Structure
 
 ```
-CureConnect/
+Mediscan AI/
 ├── 📱 app/                           # React Native Mobile App
 │   ├── app/                          # App screens and navigation
 │   │   ├── dashboard.tsx             # Main dashboard
