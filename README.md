@@ -1,7 +1,7 @@
 # 🏥 Mediscan AI - Comprehensive Healthcare Platform
 
 <div align="center">
-  <img src="app/assets/logo.png" alt="CureConnect Logo" width="200">
+  
   
   [![License](https://img.shields.io/badge/License-LGPL%20v2.1-blue.svg)](LICENSE)
   [![React Native](https://img.shields.io/badge/React%20Native-0.79.3-blue.svg)](https://reactnative.dev/)
