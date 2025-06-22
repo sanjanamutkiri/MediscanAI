@@ -1,4 +1,4 @@
-# 🏥 CureConnect - Comprehensive Healthcare Platform
+# 🏥 Mediscan AI - Comprehensive Healthcare Platform
 
 <div align="center">
   <img src="app/assets/logo.png" alt="CureConnect Logo" width="200">
@@ -350,54 +350,15 @@ user-message                 # Chat message
 - **Data Privacy**: HIPAA-compliant data handling
 - **Secure Storage**: Encrypted medical record storage
 
-## 🤝 Contributing
 
-We welcome contributions to CureConnect! Please follow these steps:
 
-1. **Fork the Repository**
-2. **Create a Feature Branch**: `git checkout -b feature/AmazingFeature`
-3. **Commit Changes**: `git commit -m 'Add some AmazingFeature'`
-4. **Push to Branch**: `git push origin feature/AmazingFeature`
-5. **Open a Pull Request**
-
-### Development Guidelines
-- Follow existing code style and conventions
-- Write comprehensive tests for new features
-- Update documentation for any API changes
-- Ensure HIPAA compliance for healthcare-related features
 
 ### Code Style
 - **JavaScript/TypeScript**: ESLint configuration provided
 - **React**: Follow React best practices and hooks patterns
 - **Node.js**: Follow Express.js conventions and async/await patterns
 
-## 📄 License
 
-This project is licensed under the GNU Lesser General Public License v2.1 - see the [LICENSE](LICENSE) file for details.
-
-## 🏆 AGTechathon 2k25
-
-This project was developed for AGTechathon 2k25, following all competition guidelines:
-- ✅ No external repository cloning
-- ✅ No complete tutorial following
-- ✅ Original development with incremental commits
-- ✅ Theme compliance with healthcare focus
-- ✅ Regular code pushes throughout development
-
-## 📞 Support & Contact
-
-For support, feature requests, or general inquiries:
-- **Emergency Services**: 8047492503 (24/7 availability)
-- **Project Issues**: Create an issue on GitHub
-- **Documentation**: Check the `/Instructions` directory
-
-## 🙏 Acknowledgments
-
-- **AGTechathon 2k25** for the opportunity and theme
-- **Google AI** for generative AI capabilities
-- **Expo & React Native** for mobile development framework
-- **React & Vite** for modern web development tools
-- **MongoDB & Node.js** for robust backend infrastructure
 
 ---
 
