@@ -92,7 +92,7 @@ function AnalysisBotXRAY() {
         setIsRedirecting(false);
 
         try {
-            const response = await fetch('http://172.31.4.177:8001/xray', {
+            const response = await fetch('http://localhost:8001/xray', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

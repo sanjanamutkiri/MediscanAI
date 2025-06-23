@@ -4,15 +4,25 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/userModel');
 
 exports.isAuthenticatedUser = catchAsyncError(async (req, res, next) => {
-    const { token } = req.cookies;
+    let token;
+    
+    // Check cookies first
+    if (req.cookies.token) {
+        token = req.cookies.token;
+    }
+    // Then check Authorization header
+    else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+
     if (!token) {
-        return next(new ErrorHander("Please login to access this feature", 401))
+        return next(new ErrorHander("Please login to access this feature", 401));
     }
     
-    const decodedData = jwt.verify(token, process.env.JWT_SECRET)
-    req.user = await User.findById(decodedData.id)
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decodedData.id);
     
-    next()
+    next();
 })
 
 exports.authorizeRoles = (...roles) => {
@@ -24,4 +34,6 @@ exports.authorizeRoles = (...roles) => {
         }
         next();
     })
+    console.log("Received token:", req.headers.authorization);
+
 }

@@ -46,7 +46,7 @@ const formatAnalysisResults = (text) => {
 
 const simplifyAnalysis = async (medicalAnalysis) => {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
         
         const prompt = `You are a medical translator who specializes in explaining complex medical terms in simple, easy-to-understand language. 
         Please convert this medical analysis into simple terms that someone without a medical background can understand.
@@ -76,23 +76,23 @@ const analyzeImage = async (imageUrl) => {
             reader.onerror = reject;
         });
 
-        const result = await genAI.models.generateContent({
-            model: "gemini-2.0-flash",
-            contents: [
-                { role: "user", parts: [{ text: "You are an expert neurologist specializing in CT scan analysis. Analyze the provided CT scan image and determine whether it indicates signs of Alzheimer. Provide a confidence score (in percentage) for your diagnosis. If Alzheimer is detected, also mention the suspected type and affected region with a probability score and in a in a user Friendly language. Include an Emergency Level (1 for high emergency, 2 for moderate emergency, 3 for low emergency) based on the severity of symptoms observed." }] },
-                { role: "user", parts: [{ inlineData: { mimeType: "image/png", data: base64Image } }] }
-            ],
-        });
+        // Get the model instance
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
-        const text = result.text();
-        setAnalysis(text);
+        // Create the prompt and image data
+        const prompt = "You are an expert neurologist specializing in CT scan analysis. Analyze the provided CT scan image and determine whether it indicates signs of Alzheimer. Provide a confidence score (in percentage) for your diagnosis. If Alzheimer is detected, also mention the suspected type and affected region with a probability score and in a user friendly language. Include an Emergency Level (1 for high emergency, 2 for moderate emergency, 3 for low emergency) based on the severity of symptoms observed.";
 
-        // Extract emergency level from the analysis
-        const emergencyLevelMatch = text.match(/Emergency Level:\s*(\d)/i);
-        const level = emergencyLevelMatch ? parseInt(emergencyLevelMatch[1]) : 3;
-        setEmergencyLevel(level);
-        setShowRedirect(true);
+        const imagePart = {
+            inlineData: {
+                data: base64Image,
+                mimeType: "image/png"
+            }
+        };
 
+        // Generate content with the correct API call
+        const result = await model.generateContent([prompt, imagePart]);
+        const text = result.response.text();
+        
         return text;
     } catch (error) {
         console.error("Error analyzing image:", error);
@@ -154,11 +154,19 @@ export default function AlzheimerVisionAI() {
 
         setIsAnalyzing(true);
         setAnalysis(null);
+        setEmergencyLevel(null);
+        setShowRedirect(false);
 
         try {
             const cloudinaryUrl = await uploadToCloudinary(selectedImage);
             const result = await analyzeImage(cloudinaryUrl);
             setAnalysis(result);
+
+            // Extract emergency level from the analysis
+            const emergencyLevelMatch = result.match(/Emergency Level[:\s]*(\d)/i);
+            const level = emergencyLevelMatch ? parseInt(emergencyLevelMatch[1]) : 3;
+            setEmergencyLevel(level);
+            setShowRedirect(true);
         } catch (error) {
             console.error("Error processing image:", error);
             setAnalysis("Error processing image. Please try again.");
@@ -190,6 +198,9 @@ export default function AlzheimerVisionAI() {
         setSelectedImage(null);
         setImagePreview(null);
         setAnalysis(null);
+        setEmergencyLevel(null);
+        setShowRedirect(false);
+        setIsSimplified(false);
     };
 
     const handleSimplify = async () => {
@@ -353,7 +364,7 @@ export default function AlzheimerVisionAI() {
                     clearInterval(timer);
                     // Handle routing based on emergency level
                     if (emergencyLevel === 1) {
-                        navigate('https://tinyurl.com/4jdnrr5b');
+                        window.open('https://tinyurl.com/4jdnrr5b', '_blank');
                     } else if (emergencyLevel === 2) {
                         navigate('/telemedicine');
                     } else if (emergencyLevel === 3) {
@@ -476,8 +487,8 @@ export default function AlzheimerVisionAI() {
                                     ) : (
                                         <button
                                             onClick={() => {
-                                                setAnalysis(analysis);
                                                 setIsSimplified(false);
+                                                // You might want to store the original analysis separately
                                             }}
                                             className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
                                         >
@@ -545,63 +556,65 @@ export default function AlzheimerVisionAI() {
                 </div>
 
                 {showRedirect && emergencyLevel && (
-                    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-xl z-50">
-                        <div className="text-center">
-                            <h2 className="text-2xl font-bold mb-4">Emergency Level Detected</h2>
-                            <div className={`text-4xl font-bold mb-4 ${
-                                emergencyLevel === 1 ? 'text-red-600' :
-                                emergencyLevel === 2 ? 'text-yellow-600' :
-                                'text-green-600'
-                            }`}>
-                                Level {emergencyLevel}
-                            </div>
-                            <p className="text-gray-600 mb-4">
-                                {emergencyLevel === 1 ? 'High Emergency - Immediate attention required' :
-                                 emergencyLevel === 2 ? 'Moderate Emergency - Prompt medical attention needed' :
-                                 'Low Emergency - Routine care recommended'}
-                            </p>
-                            
-                            {!isRedirecting ? (
-                                <div className="flex gap-4 justify-center mt-6">
-                                    <button
-                                        onClick={handleRedirect}
-                                        className={`px-6 py-2 rounded-lg font-semibold text-white ${
-                                            emergencyLevel === 1 ? 'bg-red-600 hover:bg-red-700' :
-                                            emergencyLevel === 2 ? 'bg-yellow-600 hover:bg-yellow-700' :
-                                            'bg-green-600 hover:bg-green-700'
-                                        }`}
-                                    >
-                                        Proceed to {emergencyLevel === 1 ? 'Emergency' : 
-                                                   emergencyLevel === 2 ? 'Telemedicine' : 
-                                                   'Chat'}
-                                    </button>
-                                    <button
-                                        onClick={handleStayOnPage}
-                                        className="px-6 py-2 rounded-lg font-semibold bg-gray-200 hover:bg-gray-300 text-gray-700"
-                                    >
-                                        Stay on Page
-                                    </button>
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+                            <div className="text-center">
+                                <h2 className="text-2xl font-bold mb-4">Emergency Level Detected</h2>
+                                <div className={`text-4xl font-bold mb-4 ${
+                                    emergencyLevel === 1 ? 'text-red-600' :
+                                    emergencyLevel === 2 ? 'text-yellow-600' :
+                                    'text-green-600'
+                                }`}>
+                                    Level {emergencyLevel}
                                 </div>
-                            ) : (
-                                <>
-                                    <p className="text-gray-500">
-                                        Redirecting in {countdown} seconds...
-                                    </p>
-                                    <div className="mt-4">
-                                        <div className="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div 
-                                                className="h-2.5 rounded-full transition-all duration-1000"
-                                                style={{
-                                                    width: `${(countdown / 5) * 100}%`,
-                                                    backgroundColor: emergencyLevel === 1 ? '#dc2626' :
-                                                                    emergencyLevel === 2 ? '#d97706' :
-                                                                    '#16a34a'
-                                                }}
-                                            ></div>
-                                        </div>
+                                <p className="text-gray-600 mb-4">
+                                    {emergencyLevel === 1 ? 'High Emergency - Immediate attention required' :
+                                     emergencyLevel === 2 ? 'Moderate Emergency - Prompt medical attention needed' :
+                                     'Low Emergency - Routine care recommended'}
+                                </p>
+                                
+                                {!isRedirecting ? (
+                                    <div className="flex gap-4 justify-center mt-6">
+                                        <button
+                                            onClick={handleRedirect}
+                                            className={`px-6 py-2 rounded-lg font-semibold text-white ${
+                                                emergencyLevel === 1 ? 'bg-red-600 hover:bg-red-700' :
+                                                emergencyLevel === 2 ? 'bg-yellow-600 hover:bg-yellow-700' :
+                                                'bg-green-600 hover:bg-green-700'
+                                            }`}
+                                        >
+                                            Proceed to {emergencyLevel === 1 ? 'Emergency' : 
+                                                       emergencyLevel === 2 ? 'Telemedicine' : 
+                                                       'Chat'}
+                                        </button>
+                                        <button
+                                            onClick={handleStayOnPage}
+                                            className="px-6 py-2 rounded-lg font-semibold bg-gray-200 hover:bg-gray-300 text-gray-700"
+                                        >
+                                            Stay on Page
+                                        </button>
                                     </div>
-                                </>
-                            )}
+                                ) : (
+                                    <>
+                                        <p className="text-gray-500">
+                                            Redirecting in {countdown} seconds...
+                                        </p>
+                                        <div className="mt-4">
+                                            <div className="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div 
+                                                    className="h-2.5 rounded-full transition-all duration-1000"
+                                                    style={{
+                                                        width: `${((5 - countdown) / 5) * 100}%`,
+                                                        backgroundColor: emergencyLevel === 1 ? '#dc2626' :
+                                                                        emergencyLevel === 2 ? '#d97706' :
+                                                                        '#16a34a'
+                                                    }}
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}

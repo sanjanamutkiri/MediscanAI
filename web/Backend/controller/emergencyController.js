@@ -89,10 +89,7 @@ exports.createEmergencyNotification = catchAsyncError(async (req, res, next) => 
                     📹 Direct Video Call: ${emergencyVideoCallLink}
                     🖥️ Emergency Console: ${emergencyConsoleLink}
 
-                    This is an automated emergency notification. Please respond immediately.
-
-                    Best regards,
-                    AgPatil Healthcare Emergency System
+                    
 
                     ---
                     Emergency Hotline: ${process.env.EMERGENCY_HOTLINE || 'Contact Admin'}

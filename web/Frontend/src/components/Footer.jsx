@@ -12,7 +12,7 @@ function Footer() {
                                 <div className="bg-gray-800 p-1 mr-2">
                                     <span className="text-white text-xs">+</span>
                                 </div>
-                                <span className="font-bold text-gray-800">CureCunnect</span>
+                                <span className="font-bold text-gray-800">MediScan AI</span>
                             </div>
                             <p className="text-gray-600 text-sm mb-6">
                                 If you&apos;re in need of medicines –<br />
@@ -107,7 +107,7 @@ function Footer() {
             {/* Copyright Bar */}
             <div className="bg-blue-800 py-3 md:py-4 text-white text-center text-xs md:text-sm">
                 <div className="container mx-auto px-4 md:px-6">
-                    ©️ 2025 CureConnect
+                    ©️ 2025 MediScan AI
                 </div>
             </div>
         </footer>

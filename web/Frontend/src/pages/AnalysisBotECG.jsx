@@ -295,7 +295,7 @@ function AnalysisBotECG() {
 
     const simplifyAnalysis = async (medicalAnalysis) => {
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+            const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
             
             const prompt = `You are a medical translator who specializes in explaining complex medical terms in simple, easy-to-understand language. 
             Please convert this medical analysis into simple terms that someone without a medical background can understand.
