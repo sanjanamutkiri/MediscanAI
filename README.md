@@ -25,7 +25,7 @@
 
 ## 🌟 Overview
 
-**CureConnect** is a comprehensive healthcare platform that combines mobile and web technologies to provide accessible healthcare services. Developed for AGTechathon 2k25, this platform bridges the gap between patients and healthcare providers through innovative AI-powered analysis, telemedicine services, and emergency response systems.
+**Mediscan AI** is a comprehensive healthcare platform that combines mobile and web technologies to provide accessible healthcare services. Developed for AGTechathon 2k25, this platform bridges the gap between patients and healthcare providers through innovative AI-powered analysis, telemedicine services, and emergency response systems.
 
 ### Mission
 To make quality healthcare accessible to everyone through technology, providing instant medical analysis, expert consultations, and emergency services in a unified platform.
