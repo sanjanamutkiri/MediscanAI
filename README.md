@@ -103,14 +103,7 @@ graph TB
 
 ## 🛠️ Technology Stack
 
-### Mobile Application
-- **Framework**: React Native 0.79.3 with Expo ~53.0.11
-- **Navigation**: Expo Router ~5.1.0
-- **State Management**: Redux with Redux Persist
-- **UI Components**: React Native Elements, Expo Vector Icons
-- **AI Integration**: Google Generative AI
-- **Internationalization**: i18next
-- **Media Handling**: Expo Image Picker, Expo AV
+
 
 ### Web Application
 - **Frontend**: React 19.0.0 with Vite 6.1.0
@@ -216,18 +209,7 @@ VITE_GOOGLE_AI_API_KEY=your-google-ai-key
 
 ```
 Mediscan AI/
-├── 📱 app/                           # React Native Mobile App
-│   ├── app/                          # App screens and navigation
-│   │   ├── dashboard.tsx             # Main dashboard
-│   │   ├── emergency.tsx             # Emergency services
-│   │   ├── models.tsx                # AI model selection
-│   │   ├── specific-*.tsx            # Specialized analysis screens
-│   │   └── healthtips.tsx            # Health tips and wellness
-│   ├── assets/                       # Images and media files
-│   ├── utils/                        # Utility functions and i18n
-│   ├── package.json                  # Dependencies and scripts
-│   └── README.md                     # Mobile app documentation
-│
+
 ├── 🌐 web/                          # Web Application
 │   ├── Frontend/                     # React Web Frontend
 │   │   ├── src/
@@ -249,31 +231,14 @@ Mediscan AI/
 │
 ├── 📚 Instructions/                  # Project documentation
 │   ├── README.md                     # Setup and rules
-│   └── AGTECHATHON.png              # Event documentation
+│   
 │
 ├── LICENSE                           # LGPL v2.1 License
 ├── .gitignore                        # Git ignore rules
 └── README.md                         # This file
 ```
 
-## 📱 Mobile App Features
 
-### Dashboard & Navigation
-- **Intuitive Interface**: Clean, healthcare-focused design
-- **Multi-language Support**: English and Hindi interface
-- **Quick Access**: Emergency services, AI analysis, and telemedicine
-- **Carousel Interface**: Featured services with auto-scrolling
-
-### AI Analysis Features
-- **Camera Integration**: Direct photo capture for analysis
-- **Gallery Upload**: Select existing images for analysis
-- **Real-time Processing**: Instant AI-powered medical analysis
-- **History Tracking**: Save and review past analyses
-
-### Emergency Services
-- **One-touch Emergency**: Quick access to emergency hotline
-- **IVR Integration**: Automated emergency response system
-- **Location Services**: GPS-based emergency routing
 
 ## 🌐 Web Application Features
 
@@ -364,5 +329,5 @@ user-message                 # Chat message
 
 <div align="center">
   <p><strong>CureConnect - Connecting Care, Empowering Health</strong></p>
-  <p>Built with ❤️ for AGTechathon 2k25</p>
+  <p>Built with ❤️</p>
 </div>
