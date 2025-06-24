@@ -4,7 +4,6 @@
   
   
   [![License](https://img.shields.io/badge/License-LGPL%20v2.1-blue.svg)](LICENSE)
-  [![React Native](https://img.shields.io/badge/React%20Native-0.79.3-blue.svg)](https://reactnative.dev/)
   [![React](https://img.shields.io/badge/React-19.0.0-blue.svg)](https://reactjs.org/)
   [![Node.js](https://img.shields.io/badge/Node.js-Backend-green.svg)](https://nodejs.org/)
   [![MongoDB](https://img.shields.io/badge/MongoDB-Database-green.svg)](https://mongodb.com/)
@@ -18,7 +17,6 @@
 - [Installation & Setup](#installation--setup)
 - [Project Structure](#project-structure)
 - [API Documentation](#api-documentation)
-- [Mobile App Features](#mobile-app-features)
 - [Web Application Features](#web-application-features)
 - [Contributing](#contributing)
 - [License](#license)
